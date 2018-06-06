@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.BiometricPromptDialog" parent="android:Theme.DeviceDefault.Light.Dialog">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowBackground">@color/material_grey_50</item>
+        <item name="android:windowAnimationStyle">@style/BottomSheetDialogAnimation</item>
+    </style>
+
+    <style name="BottomSheetDialogAnimation">
+        <item name="android:interpolator">@android:interpolator/fast_out_linear_in</item>
+        <item name="android:windowEnterAnimation">@anim/move_in</item>
+        <item name="android:windowExitAnimation">@anim/move_out</item>
+    </style>
+
+</resources>
