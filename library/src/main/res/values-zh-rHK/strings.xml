@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="touch_fingerprint_sensor_hint">觸按指紋感應器</string>
+    <string name="not_recognized_fingerprint_hint">未能識別</string>
+
+</resources>
