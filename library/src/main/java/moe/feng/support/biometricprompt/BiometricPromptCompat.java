@@ -3,6 +3,7 @@ package moe.feng.support.biometricprompt;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.hardware.biometrics.BiometricPrompt;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 
 import java.security.Signature;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
@@ -42,6 +44,16 @@ public class BiometricPromptCompat {
 
     static final String TAG = BiometricPromptCompat.class.getSimpleName();
 
+    // TODO: Use PackageManager.FEATURE_XXX instead. They are missing in current sdk releases.
+    private static final String FEATURE_IRIS = "android.hardware.iris";
+    private static final String FEATURE_FACE = "android.hardware.face";
+
+    private static final String[] SUPPORTED_BIOMETRIC_FEATURES = new String[] {
+            PackageManager.FEATURE_FINGERPRINT,
+            FEATURE_IRIS,
+            FEATURE_FACE
+    };
+
     @RestrictTo({RestrictTo.Scope.LIBRARY, RestrictTo.Scope.LIBRARY_GROUP})
     static boolean isApiPSupported() {
         return (IS_PREVIEW_SDK_SUPPORTED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
@@ -50,9 +62,12 @@ public class BiometricPromptCompat {
     }
 
     public static boolean isHardwareDetected(@NonNull Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final FingerprintManager manager = context.getSystemService(FingerprintManager.class);
-            return manager != null && manager.isHardwareDetected();
+        if (isApiPSupported()) {
+            final PackageManager pm = context.getPackageManager();
+            return Arrays.stream(SUPPORTED_BIOMETRIC_FEATURES).anyMatch(pm::hasSystemFeature);
+        } if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            final FingerprintManager fm = context.getSystemService(FingerprintManager.class);
+            return fm != null && fm.isHardwareDetected();
         } else {
             Log.e(TAG, "Device software version is too low so we return " +
                     "isHardwareDetected=false instead. Recommend to check software version " +
