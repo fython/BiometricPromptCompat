@@ -3,6 +3,8 @@ BiometricPromptCompat
 
 > In Android P, Google provides a easier way for developers to use biometric sensors to authenticate user identity: **BiometricPrompt**. However, it is only supported in latest Android. We create a compat library to take it to All Android 6.0+ devices.
 
+[My introduction in Chinese (中文介绍)](https://feng.moe/archives/33/)
+
 ## Introduction
 
 #### What is `BiometricPrompt`?
@@ -17,7 +19,7 @@ To learn more, read [BiometricPrompt Reference](https://developer.android.com/re
 
 BiometricPromptCompat is designed to make it compatible in old Android. Its interface is very close to the original `BiometricPrompt` in order that we can keep a consistent UI in different Android.
 
-Of course, in Android P or newer version, we will use original `BiometricPrompt` API. Then we cannot guarantee the UI is completely consistent in diffrent devices. Because ROM manufacturers will redesign in their own styles.
+Of course, in Android P or newer version, we will use original `BiometricPrompt` API. Then we cannot guarantee the UI is completely consistent in different devices. Because ROM manufacturers will redesign in their own styles.
 
 And we should realize that **in Android M there is only fingerprint sensor to be supported.** I am sorry that I have no plan to adapt thousands of ROMs' incompatible APIs.
 
@@ -28,7 +30,7 @@ And we should realize that **in Android M there is only fingerprint sensor to be
 
 ## Samples
 
-We recommend to learn `FingerprintManager` or `BiometricPromptCompat` before using this library. All you need to know will be found.
+We recommend to learn `FingerprintManager` or `BiometricPrompt` before using this library. All you need to know will be found.
 
 ```java
 final BiometricPromptCompat biometricPrompt = new BiometricPromptCompat.Builder(context)
