@@ -30,6 +30,16 @@ And we should realize that **in Android M there is only fingerprint sensor to be
 
 ## Samples
 
+[![Download](https://api.bintray.com/packages/fython/BiometricPromptCompat/library/images/download.svg)](https://bintray.com/fython/BiometricPromptCompat/library/_latestVersion)
+
+Include library in your app module:
+
+```groovy
+dependencies {
+     implementation 'moe.feng.support.biometricprompt:library:1.0.0'
+}
+```
+
 We recommend to learn `FingerprintManager` or `BiometricPrompt` before using this library. All you need to know will be found.
 
 ```java

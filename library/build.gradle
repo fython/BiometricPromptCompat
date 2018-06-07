@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
 android {
     compileSdkVersion 28
 
@@ -7,7 +10,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 2
-        versionName "1.0.0"
+        versionName project.rootProject.version
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -24,3 +27,30 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:animated-vector-drawable:27.1.1'
 }
+
+ext {
+    publishedGroupId = 'moe.feng.support.biometricprompt'
+
+    bintrayRepo = 'BiometricPromptCompat'
+    bintrayName = project.name
+
+    libraryName = 'BiometricPromptCompat'
+    artifact = project.name
+
+    libraryDescription = 'Make BiometricPrompt (Android P feature) support all Android 6.0+ devices.'
+
+    siteUrl = 'https://github.com/fython/BiometricPromptCompat'
+    gitUrl = 'https://github.com/fython/BiometricPromptCompat.git'
+
+    libraryVersion = project.rootProject.version
+
+    developerId = 'fython'
+    developerName = 'Fung Gwo'
+    developerEmail = 'fythonx@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: project.rootProject.file('bintray.gradle')

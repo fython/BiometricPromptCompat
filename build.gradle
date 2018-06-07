@@ -1,3 +1,6 @@
+group 'moe.feng.support.biometricprompt'
+version '1.0.0'
+
 buildscript {
     repositories {
         google()
@@ -5,6 +8,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
     }
 }
 
