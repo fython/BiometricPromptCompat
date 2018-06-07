@@ -109,7 +109,7 @@ public abstract class AbstractBiometricPromptDialogFragment extends DialogFragme
 
     }
 
-    private class AuthCallback extends BiometricPromptCompat.AuthenticationCallback {
+    private class AuthCallback implements BiometricPromptCompat.IAuthenticationCallback {
 
         @Override
         public void onAuthenticationSucceeded(

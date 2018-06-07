@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.CancellationSignal;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.RestrictTo;
 import android.support.annotation.StringRes;
 import android.util.Log;
@@ -20,7 +21,7 @@ import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
 
-public class BiometricPromptCompat {
+public final class BiometricPromptCompat {
 
     public static final int BIOMETRIC_ACQUIRED_GOOD = 0;
     public static final int BIOMETRIC_ACQUIRED_IMAGER_DIRTY = 3;
@@ -48,6 +49,7 @@ public class BiometricPromptCompat {
     private static final String FEATURE_IRIS = "android.hardware.iris";
     private static final String FEATURE_FACE = "android.hardware.face";
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private static final String[] SUPPORTED_BIOMETRIC_FEATURES = new String[] {
             PackageManager.FEATURE_FINGERPRINT,
             FEATURE_IRIS,
@@ -61,6 +63,7 @@ public class BiometricPromptCompat {
                 || Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
     }
 
+    @SuppressLint("NewApi")
     public static boolean isHardwareDetected(@NonNull Context context) {
         if (isApiPSupported()) {
             final PackageManager pm = context.getPackageManager();
@@ -89,32 +92,24 @@ public class BiometricPromptCompat {
     }
 
     @NonNull
-    private final Context context;
-
-    @NonNull
     private final IBiometricPromptImpl impl;
 
     private BiometricPromptCompat(@NonNull IBiometricPromptImpl impl) {
-        this.context = impl.getContext();
         this.impl = impl;
     }
 
-    IBiometricPromptImpl getImpl() {
-        return impl;
-    }
-
-    public void authenticate(@NonNull BiometricPromptCompat.AuthenticationCallback callback) {
+    public void authenticate(@NonNull IAuthenticationCallback callback) {
         impl.authenticate(null, null, callback);
     }
 
     public void authenticate(@Nullable CancellationSignal cancel,
-                             @NonNull BiometricPromptCompat.AuthenticationCallback callback) {
+                             @NonNull IAuthenticationCallback callback) {
         impl.authenticate(null, cancel, callback);
     }
 
     public void authenticate(@Nullable BiometricPromptCompat.ICryptoObject crypto,
                              @Nullable CancellationSignal cancel,
-                             @NonNull BiometricPromptCompat.AuthenticationCallback callback) {
+                             @NonNull IAuthenticationCallback callback) {
         impl.authenticate(crypto, cancel, callback);
     }
 
@@ -210,7 +205,7 @@ public class BiometricPromptCompat {
 
     }
 
-    public abstract static class AuthenticationCallback {
+    public interface IAuthenticationCallback {
 
         /**
          * Called when an unrecoverable error has been encountered and the operation is complete.
@@ -218,9 +213,7 @@ public class BiometricPromptCompat {
          * @param errorCode An integer identifying the error message
          * @param errString A human-readable error string that can be shown in UI
          */
-        public void onAuthenticationError(int errorCode, @Nullable CharSequence errString) {
-
-        }
+        void onAuthenticationError(int errorCode, @Nullable CharSequence errString);
 
         /**
          * Called when a recoverable error has been encountered during authentication. The help
@@ -229,24 +222,18 @@ public class BiometricPromptCompat {
          * @param helpCode An integer identifying the error message
          * @param helpString A human-readable string that can be shown in UI
          */
-        public void onAuthenticationHelp(int helpCode, @Nullable CharSequence helpString) {
-
-        }
+        void onAuthenticationHelp(int helpCode, @Nullable CharSequence helpString);
 
         /**
          * Called when a fingerprint is recognized.
          * @param result An object containing authentication-related data
          */
-        public void onAuthenticationSucceeded(@NonNull BiometricPromptCompat.IAuthenticationResult result) {
-
-        }
+        void onAuthenticationSucceeded(@NonNull BiometricPromptCompat.IAuthenticationResult result);
 
         /**
          * Called when a fingerprint is valid but not recognized.
          */
-        public void onAuthenticationFailed() {
-
-        }
+        void onAuthenticationFailed();
 
     }
 

@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/is_hardware_detected_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        tools:text="@string/is_hardware_detected_text_true"/>
+
+    <TextView
+        android:id="@+id/has_enrolled_fingerprints_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        tools:text="@string/has_enrolled_fingerprints_text_format"/>
 
     <Button
         android:id="@+id/btn_auth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start auth"/>
+        android:layout_marginTop="16dp"
+        android:text="@string/start_authenticate_button"/>
 
-</FrameLayout>
+</LinearLayout>

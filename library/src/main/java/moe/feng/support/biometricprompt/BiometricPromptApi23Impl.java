@@ -36,7 +36,7 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
     @Nullable
     private CancellationSignal cancellationSignal;
 
-    private BiometricPromptCompat.AuthenticationCallback callback;
+    private BiometricPromptCompat.IAuthenticationCallback callback;
 
     private FingerprintManager.AuthenticationCallback fmAuthCallback
             = new FingerprintManagerAuthenticationCallbackImpl();
@@ -98,7 +98,7 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
     public void authenticate(
             @Nullable BiometricPromptCompat.ICryptoObject crypto,
             @Nullable CancellationSignal cancel,
-            @NonNull BiometricPromptCompat.AuthenticationCallback callback
+            @NonNull BiometricPromptCompat.IAuthenticationCallback callback
     ) {
         if (dialog.isShowing()) {
             throw new IllegalArgumentException("BiometricPrompt has been started.");
@@ -136,7 +136,7 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
     BiometricPromptCompatDialog getAuthenticateDialogForFragment(
             @Nullable BiometricPromptCompat.ICryptoObject crypto,
             @Nullable CancellationSignal cancel,
-            @NonNull BiometricPromptCompat.AuthenticationCallback callback
+            @NonNull BiometricPromptCompat.IAuthenticationCallback callback
     ) {
         if (dialog.isShowing()) {
             Log.e(BiometricPromptCompat.TAG, "BiometricPrompt has been started.");

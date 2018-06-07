@@ -2,6 +2,7 @@ package moe.feng.support.biometricprompt;
 
 import android.content.Context;
 import android.hardware.biometrics.BiometricPrompt;
+import android.os.Build;
 import android.os.CancellationSignal;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +14,7 @@ import java.security.Signature;
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
 
-@RequiresApi(api = 28)
+@RequiresApi(api = Build.VERSION_CODES.P)
 @RestrictTo({RestrictTo.Scope.LIBRARY})
 class BiometricPromptApi28Impl implements IBiometricPromptImpl {
 
@@ -36,7 +37,7 @@ class BiometricPromptApi28Impl implements IBiometricPromptImpl {
     public void authenticate(
             @Nullable BiometricPromptCompat.ICryptoObject crypto,
             @Nullable CancellationSignal cancel,
-            @NonNull BiometricPromptCompat.AuthenticationCallback callback
+            @NonNull BiometricPromptCompat.IAuthenticationCallback callback
     ) {
         final BiometricPrompt.AuthenticationCallback authCallback = new BiometricPrompt.AuthenticationCallback() {
             @Override

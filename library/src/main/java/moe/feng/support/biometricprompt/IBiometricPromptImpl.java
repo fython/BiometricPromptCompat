@@ -14,6 +14,6 @@ interface IBiometricPromptImpl {
 
     void authenticate(@Nullable BiometricPromptCompat.ICryptoObject crypto,
                       @Nullable CancellationSignal cancel,
-                      @NonNull BiometricPromptCompat.AuthenticationCallback callback);
+                      @NonNull BiometricPromptCompat.IAuthenticationCallback callback);
 
 }
