@@ -144,14 +144,32 @@ public final class BiometricPromptCompat {
         }
 
         @NonNull
+        public Builder setTitle(@StringRes int titleRes) {
+            this.title = context.getString(titleRes);
+            return this;
+        }
+
+        @NonNull
         public Builder setSubtitle(CharSequence subtitle) {
             this.subtitle = subtitle;
             return this;
         }
 
         @NonNull
+        public Builder setSubtitle(@StringRes int subtitleRes) {
+            this.subtitle = context.getString(subtitleRes);
+            return this;
+        }
+
+        @NonNull
         public Builder setDescription(CharSequence description) {
             this.description = description;
+            return this;
+        }
+
+        @NonNull
+        public Builder setDescription(@StringRes int descriptionRes) {
+            this.description = context.getString(descriptionRes);
             return this;
         }
 
