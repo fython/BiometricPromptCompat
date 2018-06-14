@@ -61,6 +61,9 @@ class BiometricPromptApi28Impl implements IBiometricPromptImpl {
                 callback.onAuthenticationFailed();
             }
         };
+        if (cancel == null) {
+            cancel = new CancellationSignal();
+        }
         if (crypto != null) {
             biometricPrompt.authenticate(
                     toCryptoObjectApi28(crypto), cancel, context.getMainExecutor(), authCallback);
