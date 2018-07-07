@@ -283,4 +283,48 @@ public final class BiometricPromptCompat {
 
     }
 
+    public static class DefaultCryptoObject implements ICryptoObject {
+
+        private final Signature mSignature;
+        private final Cipher mCipher;
+        private final Mac mMac;
+
+        public DefaultCryptoObject(Signature signature) {
+            mSignature = signature;
+            mCipher = null;
+            mMac = null;
+        }
+
+        public DefaultCryptoObject(Cipher cipher) {
+            mSignature = null;
+            mCipher = cipher;
+            mMac = null;
+        }
+
+        public DefaultCryptoObject(Mac mac) {
+            mSignature = null;
+            mCipher = null;
+            mMac = mac;
+        }
+
+        @Nullable
+        @Override
+        public Signature getSignature() {
+            return mSignature;
+        }
+
+        @Nullable
+        @Override
+        public Cipher getCipher() {
+            return mCipher;
+        }
+
+        @Nullable
+        @Override
+        public Mac getMac() {
+            return mMac;
+        }
+
+    }
+
 }
