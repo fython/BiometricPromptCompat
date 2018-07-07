@@ -36,7 +36,7 @@ Include library in your app module:
 
 ```groovy
 dependencies {
-     implementation 'moe.feng.support.biometricprompt:library:1.0.0'
+     implementation 'moe.feng.support.biometricprompt:library:1.0.1'
 }
 ```
 
