@@ -3,11 +3,7 @@ package moe.feng.support.biometricprompt;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.fingerprint.FingerprintManager;
-import android.os.Build;
-import android.os.CancellationSignal;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.os.*;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -15,10 +11,9 @@ import android.support.annotation.RestrictTo;
 import android.util.Log;
 import android.view.View;
 
-import java.security.Signature;
-
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
+import java.security.Signature;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 @RestrictTo({RestrictTo.Scope.LIBRARY})
@@ -43,8 +38,6 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
 
     @Nullable
     private DialogInterface.OnClickListener negativeButtonListener;
-
-    private boolean shouldNotifyClose = true;
 
     BiometricPromptApi23Impl(
             @NonNull Context context,
@@ -81,7 +74,6 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
                 throw new IllegalArgumentException("Negative button listener should not be null.");
             }
             dialog.getNegativeButton().setOnClickListener(v -> {
-                shouldNotifyClose = false;
                 dialog.dismiss();
                 negativeButtonListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
             });
@@ -111,14 +103,12 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
         cancel.setOnCancelListener(dialog::cancel);
 
         dialog.setOnDismissListener(dialogInterface -> {
-            if (shouldNotifyClose &&
-                    cancellationSignal != null && !cancellationSignal.isCanceled()) {
+            if (cancellationSignal != null && !cancellationSignal.isCanceled()) {
                 cancellationSignal.cancel();
             }
         });
         dialog.setOnCancelListener(dialogInterface -> {
-            if (shouldNotifyClose &&
-                    cancellationSignal != null && !cancellationSignal.isCanceled()) {
+            if (cancellationSignal != null && !cancellationSignal.isCanceled()) {
                 cancellationSignal.cancel();
             }
         });
@@ -243,7 +233,6 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
 
         @Override
         public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-            shouldNotifyClose = false;
             mainHandler.post(dialog::dismiss);
             callback.onAuthenticationSucceeded(() ->
                     new CryptoObjectApi23Impl(result.getCryptoObject()));
