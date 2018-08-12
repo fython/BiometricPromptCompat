@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="@android:style/Theme.DeviceDefault.Light">
+
+        <item name="biometricPromptDialogTheme">@style/CustomBiometricPromptDialogTheme</item>
+
+    </style>
+
+    <style name="CustomBiometricPromptDialogTheme" parent="Theme.BiometricPromptDialog">
+        <item name="android:colorControlActivated">#347fe2</item>
+        <item name="android:colorAccent">#347fe2</item>
+    </style>
+
+
+</resources>

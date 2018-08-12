@@ -2,6 +2,7 @@ package moe.feng.support.biometricprompt;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 import android.view.Gravity;
@@ -23,7 +24,7 @@ class BiometricPromptCompatDialog extends Dialog {
     private final FingerprintIconView mFingerprintIcon;
 
     BiometricPromptCompatDialog(@NonNull Context context) {
-        super(context, R.style.Theme_BiometricPromptDialog);
+        super(context, findThemeResId(context));
 
         setCancelable(true);
         setCanceledOnTouchOutside(true);
@@ -40,6 +41,13 @@ class BiometricPromptCompatDialog extends Dialog {
         mNegativeButton = rootView.findViewById(android.R.id.button1);
         mFingerprintIcon = rootView.findViewById(R.id.fingerprint_icon);
         addContentView(rootView, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+    }
+
+    private static int findThemeResId(Context context) {
+        TypedArray ta = context.obtainStyledAttributes(new int[]{R.attr.biometricPromptDialogTheme});
+        int resId = ta.getResourceId(0, R.style.Theme_BiometricPromptDialog);
+        ta.recycle();
+        return resId;
     }
 
     public TextView getSubtitle() {
