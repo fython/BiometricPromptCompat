@@ -97,10 +97,14 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
         }
         this.cancellationSignal = cancel;
         this.callback = callback;
-        if (cancel == null) {
-            cancel = new CancellationSignal();
+        if (cancellationSignal == null) {
+            cancellationSignal = new CancellationSignal();
         }
-        cancel.setOnCancelListener(dialog::cancel);
+        CancellationSignal innerCancel = new CancellationSignal();
+        cancellationSignal.setOnCancelListener(() -> {
+            innerCancel.cancel();
+            dialog.cancel();
+        });
 
         dialog.setOnDismissListener(dialogInterface -> {
             if (cancellationSignal != null && !cancellationSignal.isCanceled()) {
@@ -116,7 +120,7 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
             dialog.getFingerprintIcon().setState(
                     FingerprintIconView.State.ON, false);
             fingerprintManager.authenticate(
-                    toCryptoObjectApi23(crypto), cancellationSignal,
+                    toCryptoObjectApi23(crypto), innerCancel,
                     0, fmAuthCallback, mainHandler);
         });
 
@@ -133,16 +137,20 @@ class BiometricPromptApi23Impl implements IBiometricPromptImpl {
         }
         this.cancellationSignal = cancel;
         this.callback = callback;
-        if (cancel == null) {
-            cancel = new CancellationSignal();
+        if (cancellationSignal == null) {
+            cancellationSignal = new CancellationSignal();
         }
-        cancel.setOnCancelListener(dialog::cancel);
+        CancellationSignal innerCancel = new CancellationSignal();
+        cancellationSignal.setOnCancelListener(() -> {
+            innerCancel.cancel();
+            dialog.cancel();
+        });
 
         dialog.setOnShowListener(d -> {
             dialog.getFingerprintIcon().setState(
                     FingerprintIconView.State.ON, false);
             fingerprintManager.authenticate(
-                    toCryptoObjectApi23(crypto), cancellationSignal,
+                    toCryptoObjectApi23(crypto), innerCancel,
                     0, fmAuthCallback, mainHandler);
         });
 
