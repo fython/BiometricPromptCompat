@@ -13,6 +13,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -29,7 +31,7 @@ class BiometricPromptCompatDialog extends Dialog {
         setCancelable(true);
         setCanceledOnTouchOutside(true);
 
-        Window window = getWindow();
+        Window window = Objects.requireNonNull(getWindow());
         window.setLayout(MATCH_PARENT, WRAP_CONTENT);
         window.setGravity(Gravity.BOTTOM);
 
